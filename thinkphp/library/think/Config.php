@@ -171,7 +171,7 @@ class Config implements \ArrayAccess
         $type = pathinfo($file, PATHINFO_EXTENSION);
 
         if ('php' == $type) {
-            return $this->set(include $file, $name);
+            return $this->set(include $file, $name); // 这里是加载$file 这个文件，然后$name 赋值给$flie 文件所对应的类
         } elseif ('yaml' == $type && function_exists('yaml_parse_file')) {
             return $this->set(yaml_parse_file($file), $name);
         }

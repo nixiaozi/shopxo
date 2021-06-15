@@ -79,7 +79,7 @@ define('IS_POST', isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'
 // 是否ajax
 define('IS_AJAX', ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'xmlhttprequest' == strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])) || isset($_REQUEST['ajax']) && $_REQUEST['ajax'] == 'ajax'));
 
-// 检测是否是新安装
+// 检测是否是新安装  通过查看是否存在 database.php 文件来实现，所以要新安装就可以把这个文件删除
 if(!file_exists(ROOT.'config/database.php'))
 {
     if(empty($_GET['s']) || stripos($_GET['s'], 'install') === false)

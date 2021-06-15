@@ -15,7 +15,7 @@ use think\facade\Hook;
 use app\service\RegionService;
 use app\service\SafetyService;
 use app\service\ResourcesService;
-
+// vsCode 快捷键 Ctrl + K + 0  用来折叠所有的的分段
 /**
  * 用户服务层
  * @author   Devil

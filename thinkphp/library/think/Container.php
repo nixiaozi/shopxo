@@ -48,7 +48,7 @@ use think\exception\ClassNotFoundException;
 class Container implements ArrayAccess, IteratorAggregate, Countable
 {
     /**
-     * 容器对象实例
+     * 容器对象实例已经通过@var限定了变量的类型
      * @var Container
      */
     protected static $instance;

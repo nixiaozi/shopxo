@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 namespace think;
-
+// use 在这里就是用来导入命名空间中的 类  函数 和变量的。
 use think\exception\ClassNotFoundException;
 
 class Loader
