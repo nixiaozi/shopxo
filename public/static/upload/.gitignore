@@ -1,2 +1,2 @@
-plugins_*
+*\\plugins_*   # 这个用来显示插件的image文件夹
 goods_qrcode
