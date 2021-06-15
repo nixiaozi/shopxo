@@ -32,18 +32,6 @@ return array (
   'log_write' => 
   array (
   ),
-  'plugins_css' => 
-  array (
-    0 => 'app\\plugins\\commononlineservice\\Hook',
-  ),
-  'plugins_js' => 
-  array (
-    0 => 'app\\plugins\\commononlineservice\\Hook',
-  ),
-  'plugins_view_common_bottom' => 
-  array (
-    0 => 'app\\plugins\\commononlineservice\\Hook',
-  ),
   'plugins_service_users_center_left_menu_handle' => 
   array (
     0 => 'app\\plugins\\wallet\\Hook',
