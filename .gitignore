@@ -1,4 +1,4 @@
-*.html.php
+#*.html.php
 .DS_Store
 .ide
 *.log
@@ -7,5 +7,6 @@
 .idea
 .htaccess
 nginx.htaccess
-*payment_*_respond.php
-*payment_*_notify.php
+#*payment_*_respond.php
+#*payment_*_notify.php
+# 这里会有一些回调的方法体入口 *payment_*_notify.php  这种格式是可以被系统识别的支付方法回调
