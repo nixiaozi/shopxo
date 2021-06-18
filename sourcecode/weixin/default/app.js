@@ -72,7 +72,7 @@ App({
     },
 
     // 请求地址
-    request_url: "{{request_url}}",
+    request_url: "http://192.168.0.102:8077/",
     // request_url: 'http://shopxo.com/',
     // request_url: 'https://dev.shopxo.net/',
 
