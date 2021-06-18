@@ -44,5 +44,25 @@ return array (
   array (
     0 => 'app\\plugins\\wallet\\Hook',
   ),
+  'plugins_view_user_login_info_top' => 
+  array (
+    0 => 'app\\plugins\\weixinwebauthorization\\Hook',
+  ),
+  'plugins_view_user_reg_info' => 
+  array (
+    0 => 'app\\plugins\\weixinwebauthorization\\Hook',
+  ),
+  'plugins_view_header_navigation_top_left_end' => 
+  array (
+    0 => 'app\\plugins\\weixinwebauthorization\\Hook',
+  ),
+  'plugins_service_users_personal_show_field_list_handle' => 
+  array (
+    0 => 'app\\plugins\\weixinwebauthorization\\Hook',
+  ),
+  'plugins_service_system_begin' => 
+  array (
+    0 => 'app\\plugins\\weixinwebauthorization\\Hook',
+  ),
 );
 ?>
