@@ -1,0 +1,144 @@
+{{include file="public/header" /}}
+
+<!-- right content start  -->
+<!-- <div class="content-right">
+    <div class="content">
+        <h1>后台管理页面</h1>
+        {{:print_r($data)}}
+        <p class="msg">{{// $msg}}</p>
+    </div>
+</div> -->
+<div class="content-right">
+    <div class="content">
+        <legend>
+            <span class="fs-16">我的金币</span>
+            <a href="{{:MyUrl('admin/pluginsadmin/index')}}" class="fr fs-14 m-t-5 am-icon-mail-reply"> 返回</a>
+        </legend>
+
+        <div class="wallet-content">
+            <!-- tips -->
+            <div class="am-alert am-alert-warning" data-am-alert>
+                <button type="button" class="am-close">&times;</button>
+                <p>1. 用户注册默认添加用户金币账户、或者用户访问金币账户页面也会自动添加用户金币账户</p>
+            </div>
+
+            <!-- 基础数据 -->
+            <div class="am-panel am-panel-secondary wallet-content-base">
+                <div class="am-panel-hd">
+                    <span class="am-panel-title">基础数据</span>
+                    <a class="am-fr" href="{{:PluginsAdminUrl('gold_coin', 'admin', 'saveinfo')}}">编辑</a>
+                </div>
+                <div class="am-panel-bd">
+                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-4 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: true }" >
+                        <li>
+                            <div class="items">
+                                <label>开启兑现</label>
+                                <div>
+                                    {{if !isset($data['is_enable_exchange']) or $data['is_enable_exchange'] eq 1}}
+                                        是
+                                    {{else /}}
+                                        否
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="items">
+                                <label>金币兑换比率</label>
+                                <div>
+                                    {{if empty($data['gold_exchange_rate'])}}
+                                        100
+                                    {{else /}}
+                                        {{$data.gold_exchange_rate}}
+                                    {{/if}}
+                                    %
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="items">
+                                <label>积分消耗比率</label>
+                                <div>
+                                    {{if empty($data['integral_consume_rate'])}}
+                                        100
+                                    {{else /}}
+                                        {{$data.integral_consume_rate}}
+                                    {{/if}}
+                                    %
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="items am-padding-sm">
+                                <label>金币获取方法</label>
+                                <div class="am-scrollable-vertical">
+                                    {{if !empty($data['gold_got_methods'])}}
+                                        {{:implode('<br />', $data['gold_got_methods'])}}
+                                    {{else /}}
+                                        未设置，默认不展示
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="items am-padding-sm">
+                                <label>用户中心公告</label>
+                                <div class="am-scrollable-vertical">
+                                    {{if !empty($data['gold_user_center_notice'])}}
+                                        {{:implode('<br />', $data['gold_user_center_notice'])}}
+                                    {{else /}}
+                                        未设置，默认不展示
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 统计面板/管理 -->
+            <div class="am-panel am-panel-secondary wallet-content-module">
+                <div class="am-panel-hd">
+                    <span class="am-panel-title">管理</span>
+                </div>
+                <div class="am-panel-bd">
+                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-1 am-avg-md-2 am-avg-lg-2 am-gallery-default" data-am-gallery="{ pureview: true }" >
+                        {{if !empty($statistical)}}
+                            {{foreach $statistical as $v}}
+                                <li class="module-wallet">
+                                    <div class="module-items">
+                                        <p class="title">{{$v.title}}</p>
+                                        <p class="total animation-count-to" data-to="{{$v.count}}" data-speed="1500">{{$v.count}}</p>
+                                        <div class="small">
+                                            <span>昨日</span>
+                                            <span class="animation-count-to" data-to="{{$v.yesterday_count}}" data-speed="1500">{{$v.yesterday_count}}</span>
+                                        </div>
+                                        <div class="small">
+                                            <span>今日</span>
+                                            <span class="animation-count-to" data-to="{{$v.today_count}}" data-speed="1500">{{$v.today_count}}</span>
+                                        </div>
+                                        {{if isset($v['right_count']) and isset($v['right_title'])}}
+                                            <div class="top-right">
+                                                <span>{{$v.right_title}}</span>
+                                                <span class="animation-count-to" data-to="{{$v.right_count}}" data-speed="1500">{{$v.right_count}}</span>
+                                            </div>
+                                        {{/if}}
+                                        <a href="{{$v.url}}" class="view-to">管理 <i class="am-icon-angle-double-right"></i></a>
+                                    </div>
+                                </li>
+                            {{/foreach}}
+                        {{/if}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- right content end  -->
+        
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->

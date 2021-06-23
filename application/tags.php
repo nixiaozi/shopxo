@@ -35,14 +35,17 @@ return array (
   'plugins_service_users_center_left_menu_handle' => 
   array (
     0 => 'app\\plugins\\wallet\\Hook',
+    1 => 'app\\plugins\\gold_coin\\Hook',
   ),
   'plugins_service_header_navigation_top_right_handle' => 
   array (
     0 => 'app\\plugins\\wallet\\Hook',
+    1 => 'app\\plugins\\gold_coin\\Hook',
   ),
   'plugins_service_user_register_end' => 
   array (
     0 => 'app\\plugins\\wallet\\Hook',
+    1 => 'app\\plugins\\gold_coin\\Hook',
   ),
   'plugins_view_user_login_info_top' => 
   array (

@@ -1,0 +1,36 @@
+{
+    "base":{
+        "plugins":"gold_coin",
+        "name":"金币",
+        "logo":"\/static\/upload\/images\/plugins_gold_coin\/2021\/06\/18\/1624004436525440.png",
+        "author":"李颖成",
+        "author_url":"https:\/\/space.bilibili.com\/580603654",
+        "version":"1.0.0",
+        "desc":"这是一个自定义的金币插件",
+        "apply_terminal":[
+            "pc",
+            "h5",
+            "ios",
+            "android",
+            "weixin",
+            "alipay",
+            "baidu"
+        ],
+        "apply_version":[
+            "1.9.3",
+            "2.0.3"
+        ],
+        "is_home":true
+    },
+    "hook":{ 
+        "plugins_service_users_center_left_menu_handle":[
+            "app\\plugins\\gold_coin\\Hook"
+        ],
+        "plugins_service_header_navigation_top_right_handle":[
+            "app\\plugins\\gold_coin\\Hook"
+        ],
+        "plugins_service_user_register_end":[
+            "app\\plugins\\gold_coin\\Hook"
+        ]
+    }
+}
