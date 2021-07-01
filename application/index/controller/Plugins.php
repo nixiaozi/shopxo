@@ -134,9 +134,9 @@ class Plugins extends Common
     public function PluginsViewInit($plugins_name, $plugins_control, $plugins_action)
     {
         // 应用名称/控制器/方法
-        $this->assign('plugins_name', $plugins_name);
-        $this->assign('plugins_control', $plugins_control);
-        $this->assign('plugins_action', $plugins_action);
+        $this->assign('plugins_name', $plugins_name);   // 这里可以正式获得插件名
+        $this->assign('plugins_control', $plugins_control); // 这里可以正式获得控制器名
+        $this->assign('plugins_action', $plugins_action);   // 这里可以正式获得方法行为名
 
         // 当前操作名称
         $module_name = 'plugins';

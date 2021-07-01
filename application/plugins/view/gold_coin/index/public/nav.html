@@ -1,0 +1,64 @@
+<!-- 导航 -->
+<ul class="am-nav am-nav-pills">
+    <li {{if !isset($plugins_control) or (isset($plugins_control) and $plugins_control eq 'goldcoin')}}
+        class="am-active"{{/if}}>
+        <a href="{{:PluginsHomeUrl('gold_coin', 'Goldcoin', 'index')}}">金币余额</a>
+    </li>
+    <li {{if isset($plugins_control) and $plugins_control eq 'recharge'}}class="am-active"{{/if}}>
+        <a href="{{:PluginsHomeUrl('gold_coin', 'Dig', 'index')}}">金币获取</a>
+    </li>
+    <li {{if isset($plugins_control) and $plugins_control eq 'cash'}}class="am-active"{{/if}}>
+        <a href="{{:PluginsHomeUrl('gold_coin', 'Exchange', 'index')}}">金币兑换</a>
+    </li>
+
+    <div class="am-topbar-right">
+        {{if in_array($plugins_control, ['goldcoin', 'dig']) and (!isset($plugins_base['is_enable_dig']) or $plugins_base['is_enable_dig'] eq 1)}}
+            <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-icon-shield" data-am-modal="{target: '#plugins-recharge-pay-modal', width: 260, height: 130}"> 挖矿</button>
+        {{/if}}
+        {{if in_array($plugins_control, ['goldcoin', 'exchange']) and (!isset($plugins_base['is_enable_exchange']) or $plugins_base['is_enable_exchange'] eq 1)}}
+            <a href="{{:PluginsHomeUrl('gold_coin', 'exchange', 'authinfo')}}" class="am-btn am-btn-success am-topbar-btn am-btn-sm am-icon-money">兑换</a>
+        {{/if}}
+    </div>
+</ul>
+
+<!-- 公告 -->
+{{if !empty($plugins_base['gold_user_center_notice']) and $plugins_control eq 'goldcoin'}}
+    <div class="am-alert am-alert-warning" data-am-alert>
+        <button type="button" class="am-close">&times;</button>
+        <p>{{:implode('<br />', $plugins_base['gold_user_center_notice'])}}</p>
+    </div>
+{{/if}}
+
+<!-- 账户信息 -->
+{{if empty($gold_account_error)}}
+    <div class="am-alert am-alert-secondary" data-am-alert>
+        <div class="normal">
+            <span>可用金币数</span>
+            <span class="panel-value">{{$user_gold_account.current_coin}}</span>
+            <em>个</em>
+            <span class="panel-tips">可以使用的金币数</span>
+        </div>
+        <div class="frozen">
+            <span>累计金币数</span>
+            <span class="panel-value">{{$user_gold_account.total_coin}}</span>
+            <em>个</em>
+            <span class="panel-tips">累计获取的所有金币数</span>
+        </div>
+        <div class="give">
+            <span>已使用金币数</span>
+            <span class="panel-value">{{$user_gold_account.used_coin}}</span>
+            <em>个</em>
+            <span class="panel-tips">已经使用过的金币数</span>
+        </div>
+    </div>
+{{else /}}
+    <div class="am-alert am-alert-warning" data-am-alert>
+        {{$gold_account_error}}
+    </div>
+{{/if}}
+
+
+<script type="text/javascript">
+
+
+</script>

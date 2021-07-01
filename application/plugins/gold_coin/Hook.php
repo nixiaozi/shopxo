@@ -60,7 +60,7 @@ class Hook extends Controller
     {
         $params['data']['property']['item'][] = [
             'name'      =>  '我的金币',
-            'url'       =>  PluginsHomeUrl('gold_coin', 'gold_coin', 'index'),
+            'url'       =>  PluginsHomeUrl('gold_coin', 'GoldCoin', 'index'),
             //'contains'  =>  ['gold_coinindex', 'rechargeindex', 'cashindex', 'cashauthinfo', 'cashcreateinfo'],
             'is_show'   =>  1,
             'icon'      =>  'am-icon-btc',  // 这里添加的是 一个我们需要的页面
@@ -71,7 +71,7 @@ class Hook extends Controller
     {
         array_push($params['data'][1]['items'], [
             'name'  => '我的金币',
-            'url'   => PluginsHomeUrl('gold_coin', 'gold_coin', 'index'),
+            'url'   => PluginsHomeUrl('gold_coin', 'GoldCoin', 'index'),
             'is_show'   =>  1,
         ]);
     }
