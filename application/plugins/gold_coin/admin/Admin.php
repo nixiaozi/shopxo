@@ -69,7 +69,7 @@ class Admin extends Controller
     public function  save($params=[])
     {
         // 暂时不需要进行任何操作，可以直接进行保存
-
+        
         // 数据保存
         return PluginsService::PluginsDataSave(['plugins'=>'gold_coin', 'data'=>$params]);
     }

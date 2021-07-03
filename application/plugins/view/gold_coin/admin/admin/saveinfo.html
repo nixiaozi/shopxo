@@ -82,6 +82,105 @@
                 </div>
             </div>
 
+            <!-- 金币挖矿配置  -->
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">
+                    <h3 class="am-panel-title">挖矿配置</h3>
+                </div>
+                <!-- 挖矿功能开启 -->
+                <div class="am-form-group">
+                    <label>开启挖矿<span class="am-form-group-label-tips">默认开启</span></label>
+                    <div>
+                        {{foreach $is_whether_list as $v}}
+                            <label class="am-radio-inline m-r-10">
+                                <input type="radio" name="is_enable_dig" value="{{$v.value}}" 
+                                    {{if isset($data['is_enable_dig']) 
+                                        and $data['is_enable_dig'] eq $v['value']
+                                    }}
+                                    checked="checked"
+                                    {{else /}}
+                                        {{if !isset($data['is_enable_dig']) 
+                                            and isset($v['checked']) and $v['checked'] eq true
+                                        }}
+                                        checked="checked"
+                                        {{/if}}
+                                    {{/if}} data-am-ucheck /> 
+                                    {{$v.name}}
+                            </label>
+                        {{/foreach}}
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label class="block">添加矿工图片<span class="am-form-group-label-tips">{{// 这里可以添加备注}}</span></label>
+                    <ul class="plug-file-upload-view dig_coin_work-images-view" data-form-name="dig_coin_work" 
+                        data-max-number="1" data-dialog-type="images">
+                        {{// if !empty($data['dig_coin_work'])}}
+                            <li>
+                                <input type="text" name="dig_coin_work" 
+                                    value="{{if !empty($data['dig_coin_work'])}}
+                                    {{$data.dig_coin_work}}
+                                    {{else /}}
+                                    {{$attachment_host}}/static/admin/default/images/default-images.jpg
+                                    {{/if}}" />
+                                <img src="{{if !empty($data['dig_coin_work'])}}
+                                    {{$data.dig_coin_work}}
+                                    {{else /}}
+                                    {{$attachment_host}}/static/admin/default/images/default-images.jpg
+                                    {{/if}}" />
+                                <i>×</i>
+                            </li>
+                        {{// /if}}
+                    </ul>
+                    <div class="plug-file-upload-submit" data-view-tag="ul.dig_coin_work-images-view">+选择图片</div>
+                </div>
+
+                
+                <div class="am-form-group">
+                    <label class="block">添加挖矿成功图片<span class="am-form-group-label-tips">挖矿成功后显示的图片{{// 这里可以添加备注}}</span></label>
+                    <ul class="plug-file-upload-view dig_coin_success-images-view" data-form-name="dig_coin_success" 
+                        data-max-number="1" data-dialog-type="images">
+                            <li>
+                                <input type="text" name="dig_coin_success" 
+                                    value="{{if !empty($data['dig_coin_success'])}}
+                                    {{$data.dig_coin_success}}
+                                    {{else /}}
+                                    {{$attachment_host}}/static/admin/default/images/default-images.jpg
+                                    {{/if}}" />
+                                <img src="{{if !empty($data['dig_coin_success'])}}
+                                    {{$data.dig_coin_success}}
+                                    {{else /}}
+                                    {{$attachment_host}}/static/admin/default/images/default-images.jpg
+                                    {{/if}}" />
+                                <i>×</i>
+                            </li>
+                    </ul>
+                    <div class="plug-file-upload-submit" data-view-tag="ul.dig_coin_success-images-view">+选择图片</div>
+                </div>
+
+            
+            <div class="am-form-group">
+                <label class="block">添加挖矿失败图片<span class="am-form-group-label-tips">挖矿失败后显示的图片</span></label>
+                <ul class="plug-file-upload-view dig_coin_failure-images-view" data-form-name="dig_coin_failure" 
+                    data-max-number="1" data-dialog-type="images">
+                        <li>
+                            <input type="text" name="dig_coin_failure" 
+                                value="{{if !empty($data['dig_coin_failure'])}}
+                                {{$data.dig_coin_failure}}
+                                {{else /}}
+                                {{$attachment_host}}/static/admin/default/images/default-images.jpg
+                                {{/if}}" />
+                            <img src="{{if !empty($data['dig_coin_failure'])}}
+                                {{$data.dig_coin_failure}}
+                                {{else /}}
+                                {{$attachment_host}}/static/admin/default/images/default-images.jpg
+                                {{/if}}" />
+                            <i>×</i>
+                        </li>
+                </ul>
+                <div class="plug-file-upload-submit" data-view-tag="ul.dig_coin_failure-images-view">+选择图片</div>
+            </div>
+
+        </div>
             <!-- 用户中心 -->
             <div class="am-panel am-panel-default">
                 <div class="am-panel-hd">

@@ -61,6 +61,8 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}plugins_gold_coin_dig`(
     `dig_gold` int(10) NOT NULL DEFAULT '0' COMMENT '挖到的金币数',
     `status` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '状态（0可挖矿, 1待审核, 2已挖掘）',
     `msg` char(200) NOT NULL DEFAULT '' COMMENT '描述（用户可见）',
+    `add_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+    `dig_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '挖矿时间',
     PRIMARY KEY (`id`),
     KEY `gold_coin_id` (`gold_coin_id`),
     KEY `user_id` (`user_id`)

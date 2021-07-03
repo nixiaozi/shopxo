@@ -305,8 +305,54 @@ class GoldCoinBaseService
         $data = Db::name('PluginsGoldCoinDig')->field($field)->where($where)->limit($m, $n)->order($order_by)->select();
         if(!empty($data))
         {
-            
+            $dig_status_list = GoldDigService::$gold_dig_status_list;
+            foreach($data as &$v)
+            {
+                // 用户信息
+                $v['user'] = UserService::GetUserViewInfo($v['user_id']);
+
+                // 状态
+                $v['status_name'] = (isset($v['status']) && isset($dig_status_list[$v['status']])) ? $dig_status_list[$v['status']]['name'] : '未知';
+
+                // 时间
+                $v['add_time_time'] = empty($v['add_time']) ? '' : date('Y-m-d H:i:s', $v['add_time']);
+                $v['dig_time_time'] = empty($v['dig_time_time']) ? '' : date('Y-m-d H:i:s', $v['dig_time_time']);
+            }
         }
+        return DataReturn('处理成功', 0, $data);
+    }
+
+    // 获取用户挖矿的记录
+    public static function GoldDigTotal($where = [])
+    {
+        return (int) Db::name('PluginsGoldCoinDig')->where($where)->count();
+    }
+
+    // 用户挖矿记录的筛选条件
+    public static function GoldDigWhere($params = [])
+    {
+        $where = [];
+
+        // 用户
+        if(!empty($params['keywords']))
+        {
+            $user_ids = Db::name('User')->where('username|nickname|mobile|email', '=', $params['keywords'])->column('id');
+            if(!empty($user_ids))
+            {
+                $where[] = ['user_id', 'in', $user_ids];
+            } else {
+                // 无数据条件，避免用户搜索条件没有数据造成的错觉
+                $where[] = ['id', '=', 0];
+            }
+        }
+
+        // 状态
+        if(isset($params['status']) && $params['status'] > -1)
+        {
+            $where[] = ['status', '=', $params['status']];
+        }
+
+        return $where;
     }
 
 }
