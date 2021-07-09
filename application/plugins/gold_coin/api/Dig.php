@@ -26,8 +26,11 @@ class Dig extends Common
 
         // 添加一个挖矿条目
         
+        // 测试如何如何获取配置信息 test code 
+        $result = MyC("gold_coin_all_dig_func"); // 获取全局配置
 
-        
+        // 测试如何获取配置信息
+
         return DataReturn('success', 0, ["dsf","gds"]);
 
     }

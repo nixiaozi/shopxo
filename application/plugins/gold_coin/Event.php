@@ -1,7 +1,7 @@
 <?php
 namespace app\plugins\gold_coin;
 
-
+use app\service\ConfigService;
 use app\service\SqlconsoleService;
 use think\Db;
 
@@ -38,6 +38,9 @@ class Event{
 
             Db::name('Config')->json(['value'])->insert($dig_methods_data);
 
+            // 安装之后需要更新缓存的配置信息
+            ConfigService::ConfigInit(1);
+
         }
     
     }
@@ -50,6 +53,10 @@ class Event{
         {
             Db::name("Config")->where(["only_tag"=>self::all_dig_func_key])->delete();
         }
+
+
+            // 安装之后需要更新缓存的配置信息
+            ConfigService::ConfigInit(1);
     }
 
 }
