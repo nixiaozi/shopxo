@@ -32,7 +32,7 @@ class Dig extends Common
         // 测试如何获取配置信息
 
         return DataReturn('success', 0, ["dsf","gds"]);
-
+        
     }
 
 

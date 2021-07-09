@@ -52,10 +52,11 @@ class Admin extends Controller
         if($ret["code"] == 0)
         {
             // 需要获取所有的内容
-            $gold_all_dig = Db::name("Config")->where(["only_tag"=>GoldDigService::$all_dig_func_key])->find();
-            $gold_all_dig = $gold_all_dig==null ? []:$gold_all_dig;
+            // $gold_all_dig = Db::name("Config")->where(["only_tag"=>GoldDigService::$all_dig_func_key])->find();
+            // $gold_all_dig = $gold_all_dig==null ? []:$gold_all_dig;
+            $gold_all_dig =json_decode(MyC(GoldDigService::$all_dig_func_key),true); // 设置第二个参数为true 返回正确形式
             
-            
+            $this->assign('gold_all_dig',$gold_all_dig);
             
             // 是否
             $is_whether_list =  [
@@ -76,8 +77,19 @@ class Admin extends Controller
 
     public function  save($params=[])
     {
-        // 暂时不需要进行任何操作，可以直接进行保存
+        // 这里需要获得 返回的 gold_got_methods 数组并重新赋值
+        $gold_all_dig =json_decode(MyC(GoldDigService::$all_dig_func_key),true);
         
+        $the_current_dig_methods = [];
+        foreach(explode(',',$params['gold_got_methods'])  as $v)
+        {
+            if(array_key_exists($v,$gold_all_dig))
+            {
+                $the_current_dig_methods[]=$gold_all_dig[$v];
+            }
+        }
+        
+        $params['gold_got_methods']=$the_current_dig_methods;
         
         // 数据保存
         return PluginsService::PluginsDataSave(['plugins'=>'gold_coin', 'data'=>$params]);

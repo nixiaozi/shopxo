@@ -73,7 +73,10 @@
                                 <label>金币获取方法</label>
                                 <div class="am-scrollable-vertical">
                                     {{if !empty($data['gold_got_methods'])}}
-                                        {{:implode('<br />', $data['gold_got_methods'])}}
+                                        {{// 需要修改显示才行 :implode('<br />', $data['gold_got_methods']['descript'].'('.')')}}
+                                        {{foreach $data['gold_got_methods'] as $v}}
+                                            {{$v['descript']}}({{$v['pluginsName']}}/{{$v['controllerName']}}/{{$v['actionName']}})<br />
+                                        {{/foreach}}
                                     {{else /}}
                                         未设置，默认不展示
                                     {{/if}}
