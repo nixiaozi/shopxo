@@ -12,11 +12,21 @@
     </li>
 
     <div class="am-topbar-right">
-        {{if in_array($plugins_control, ['goldcoin', 'dig']) and (!isset($plugins_base['is_enable_dig']) or $plugins_base['is_enable_dig'] eq 1)}}
-            <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-icon-shield" data-am-modal="{target: '#plugins-recharge-pay-modal', width: 260, height: 130}"> 挖矿</button>
+        {{if 
+            in_array($plugins_control, ['goldcoin', 'dig']) 
+            and (!isset($plugins_base['is_enable_dig']) or $plugins_base['is_enable_dig'] eq 1)}}
+            <!-- <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-icon-shield" 
+                data-am-modal="{target: '#plugins-recharge-pay-modal', width: 260, height: 130}"> 挖矿</button> -->
+            <!-- <form  action="{{:PluginsHomeUrl('wallet', 'recharge', 'create')}}" method="POST" request-type="ajax-fun" request-value="PluginsRechargeBack">
+                <button type="submit" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-icon-shield" > 挖矿</button>
+            </form> -->
+            <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-icon-shield" data-view="fun"
+                {{// 下面的url就是如何调用插件中的api模块定义的方法}} type="button"
+                data-url="{{:MyUrl('api/plugins/index',['pluginsname'=>'gold_coin','pluginscontrol'=>'Dig','pluginsaction'=>'Todig'])}}"
+                onclick="PrepareDig($(this))" data-value="DoneDig" data-am-loading="{loadingText:'请求中...'}"> 挖矿</button>
         {{/if}}
         {{if in_array($plugins_control, ['goldcoin', 'exchange']) and (!isset($plugins_base['is_enable_exchange']) or $plugins_base['is_enable_exchange'] eq 1)}}
-            <a href="{{:PluginsHomeUrl('gold_coin', 'exchange', 'authinfo')}}" class="am-btn am-btn-success am-topbar-btn am-btn-sm am-icon-money">兑换</a>
+            <button href="{{:PluginsHomeUrl('gold_coin', 'exchange', 'authinfo')}}" class="am-btn am-btn-success am-topbar-btn am-btn-sm am-icon-money">兑换</button>
         {{/if}}
     </div>
 </ul>
@@ -57,8 +67,101 @@
     </div>
 {{/if}}
 
+<div class="transform dig-img-container" >
+    <button class="dig-button" onclick="ToDigCoin($(this))" data-am-loading="{spinner:'circle-o-notch',loadingText:'请求中...'}">金币获取</button>
+    <div class="meter">
+        <span class="progress-transform"></span>
+    </div>
+    <img class="dig-img-doing" src="{{$plugins_base['dig_coin_work']}}">
+</div>
+
 
 <script type="text/javascript">
+function ToDigCoin(obj)
+{
+    var $target = obj;
+
+    SunlitAjax($target);
+}
+
+function PrepareDig(obj)
+{
+    var $target = obj;
+    //$target.button('loading');
+    console.log("Perpare Dig! ");
+
+
+    // AjaxRequest($target); 封装好的不太适合我们使用，需要自己封装
+    SunlitAjax($target);
+    // 修改按钮的文本为请求中
+
+    //$target.button('reset');
+
+}
+
+// 这个是 AjaxRequest 获取返回值之后的结果
+function DoneDig(r){
+    console.log("Done Dig!");
+    // 首先需要为获取金币的按钮添加一个自定义的请求反馈值
+
+
+    // 下面需要显示矿工
+
+    asyncShowDigAnimation();
+
+
+
+}
+
+
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+
+
+
+const simulateDownload = (progress) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(progress + getRandomInt(3,30));
+        }, 1000);
+    }).then(res => res);
+};
+
+async function asyncShowDigAnimation() {
+    const documentStyles = document.documentElement.style;
+    await TimeoutPromise(function(){
+        documentStyles.setProperty('--dig_display', `block`);
+    });
+    await TimeoutPromise(function(){
+        documentStyles.setProperty('--dig_opacity', 1); // 为矿工元素添加渐入效果
+    },100);
+
+
+    var progress =0;
+    do{
+        progress = await simulateDownload(progress);
+
+        if(progress>=100){  
+            progress = 100;
+            // 添加完成后需要显示按钮
+            console.log("complete to show button!");
+            setTimeout(() => {
+                $(".meter").hide(100);
+                documentStyles.setProperty('--digbtn-opactity', 1);
+            }, 800);
+
+        }
+        
+        documentStyles.setProperty('--progress-percent', progress+"%");
+
+    }while(progress<100)
+
+
+}
 
 
 </script>

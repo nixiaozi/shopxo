@@ -24,8 +24,11 @@ class Dig extends Common
         $params['user'] = $this->user;
         $params['user_type'] = 'user';
 
+        // 添加一个挖矿条目
         
 
+        
+        return DataReturn('success', 0, ["dsf","gds"]);
 
     }
 

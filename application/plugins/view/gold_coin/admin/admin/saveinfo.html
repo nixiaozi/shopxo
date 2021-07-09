@@ -180,6 +180,21 @@
                 <div class="plug-file-upload-submit" data-view-tag="ul.dig_coin_failure-images-view">+选择图片</div>
             </div>
 
+            <!-- 这里需要确认可使用的方法 -->
+            <div class="am-form-group">
+                <labe>可用挖矿方法<span class="am-form-group-label-tips">这里选择可用的挖矿方法</span></labe>
+                <select name="gold_got_methods" multiple="multiple" class="am-radius chosen-select" 
+                    data-placeholder="请选择可用的挖矿方法" data-validation-message="必须选择方法" required>
+                    {{foreach $gold_all_dig as $v}}
+                        <option value="{{$v.value}}" 
+                        {{if isset($data['admin_login_type']['value']) and in_array($v['value'], 
+                            $data['admin_login_type']['value'])}}selected{{/if}}>
+                            {{$v.name}}
+                        </option>
+                    {{/foreach}}
+                </select>
+            </div>
+
         </div>
             <!-- 用户中心 -->
             <div class="am-panel am-panel-default">

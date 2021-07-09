@@ -2,8 +2,10 @@
 namespace app\plugins\gold_coin\admin;
 
 use app\plugins\gold_coin\service\GoldCoinBaseService;
+use app\plugins\gold_coin\service\GoldDigService;
 use think\Controller;
 use app\service\PluginsService;
+use think\Db;
 
 /**
  * 金币 - 后台管理
@@ -34,7 +36,7 @@ class Admin extends Controller
             $this->assign("data",$ret["data"]);
 
             // 统计数据 —— 可以使用一个服务添加
-
+            
 
             // 输出管理页面
             return $this->fetch('../../../plugins/view/gold_coin/admin/admin/index');
@@ -49,6 +51,12 @@ class Admin extends Controller
         $ret = GoldCoinBaseService::BaseConfig(false);
         if($ret["code"] == 0)
         {
+            // 需要获取所有的内容
+            $gold_all_dig = Db::name("Config")->where(["only_tag"=>GoldDigService::$all_dig_func_key])->find();
+            $gold_all_dig = $gold_all_dig==null ? []:$gold_all_dig;
+            
+            
+            
             // 是否
             $is_whether_list =  [
                 0 => array('value' => 0, 'name' => '否'),
@@ -69,6 +77,7 @@ class Admin extends Controller
     public function  save($params=[])
     {
         // 暂时不需要进行任何操作，可以直接进行保存
+        
         
         // 数据保存
         return PluginsService::PluginsDataSave(['plugins'=>'gold_coin', 'data'=>$params]);
