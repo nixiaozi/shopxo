@@ -68,21 +68,137 @@
 {{/if}}
 
 <div class="transform dig-img-container" >
-    <button class="dig-button" onclick="ToDigCoin($(this))" data-am-loading="{spinner:'circle-o-notch',loadingText:'请求中...'}">金币获取</button>
+    <button id="DigCoinBtn" class="dig-button" onclick="ToDigCoin($(this))" data-am-loading="{spinner:'circle-o-notch',loadingText:'请求中...'}">金币获取</button>
     <div class="meter">
         <span class="progress-transform"></span>
     </div>
     <img class="dig-img-doing" src="{{$plugins_base['dig_coin_work']}}">
 </div>
 
+<div class="transform dig-result-container">
+    <p id="DigMsg" class="sunlit-font success-text">
+        金币 +2
+      </p>
+    <img class="dig-img-success" src="{{$plugins_base['dig_coin_success']}}">
+    <img class="dig-img-failure" src="{{$plugins_base['dig_coin_failure']}}">
+</div>
+
 
 <script type="text/javascript">
+var  digCheck = false;
+var  digCheckElement =null;
+
 function ToDigCoin(obj)
 {
     var $target = obj;
 
-    SunlitAjax($target);
+    $('#DigCoinBtn').button("loading"); // 开始 loading 方法
+    // SunlitAjax($target);
+    // 需要打开一个页面
+    window.open(DigDoneResult.dig_url, '_blank', 'toolbar=0,location=0,menubar=0');
+    console.log("DigDoneResult.dig_url is==>"+DigDoneResult.dig_url);
+    console.log("DigDoneResult.dig_id is ==>"+DigDoneResult.dig_id);
+
+
+    digCheckElement=document.createElement("div");
+    digCheckElement.setAttribute('data-url',"{{:MyUrl('api/plugins/index',['pluginsname'=>'gold_coin','pluginscontrol'=>'Dig','pluginsaction'=>'DigStatu'])}}");
+    digCheckElement.setAttribute('data-id',DigDoneResult.dig_id);     // 定义一定要有的id
+    digCheckElement.setAttribute('data-view',"fun");   // 定义外部方法
+    digCheckElement.setAttribute('data-value',"DigCoinCallBackSuccess");
+
+
+    // 需要添加一个轮询方法
+    var callback = function(){
+        new Promise((resolve, reject)=>{
+            SunlitAjax($(digCheckElement),function(){},function(){
+                resolve();
+            })
+        }).then(res=>{
+            // 通过上面的resolve 添加到这里
+            console.log("Promise execute success !");
+            if(!digCheck){
+                setTimeout(callback, 2000);
+            }
+        })
+    };
+
+    setTimeout(callback, 2000);
+
 }
+
+function DigCoinCallBackSuccess(res)
+{
+    console.log("DigCoinCallBackSuccess");
+    console.log(JSON.stringify(res));
+
+    // 查看状态返回值，如果已经有挖矿就需要修改数据
+    if(res.data.status !=0)
+    {
+        $('#DigCoinBtn').button("reset"); // 完成 loading 方法
+        digCheck = true;
+        // 需要根据状态进行顺序的异步操作
+        // DigCoinCallBackSuccessAsync(res.data.status);
+        DigCoinCallBackSuccessAsync(-1);
+    }
+
+   
+
+
+}
+
+async  function DigCoinCallBackSuccessAsync(checkstatus)
+{
+    const documentStyles = document.documentElement.style;
+
+
+    documentStyles.setProperty('--dig_display', `none`); // 隐藏矿工
+
+
+    // checkstatus 为 1 表示完成成功
+    if(checkstatus == 1)
+    {
+        $("#DigMsg").text("金币+"+8);
+
+        await TimeoutPromise(function(){
+            documentStyles.setProperty('--result_display', `block`); // 显示成功以及提示
+            documentStyles.setProperty('--success_display', `block`);
+        });
+
+        await TimeoutPromise(function(){
+            documentStyles.setProperty('--result_display', `none`); // 隐藏所有提示
+        },2100);
+    }
+
+    // checkstatus 为 -1 表示失败
+    if(checkstatus == -1)
+    {
+        $("#DigMsg").removeClass("success-text");
+        $("#DigMsg").addClass("failure-text")
+        $("#DigMsg").text("挖矿失败");
+
+        await TimeoutPromise(function(){
+            documentStyles.setProperty('--result_display', `block`); // 显示成功以及提示
+            documentStyles.setProperty('--failure_display', `block`);
+        });
+
+        await TimeoutPromise(function(){
+            documentStyles.setProperty('--result_display', `none`); // 隐藏所有提示
+        },2100);
+    }
+
+    // 完成后需要重新加载页面
+    location.reload();
+}
+
+// const CheckDigStatu = ()=>{
+//     return new Promise((resolve,reject)=>{
+//         setTimeout(() => {
+//             SunlitAjax()
+            
+//         }, 1000);
+//     });
+// }
+
 
 function PrepareDig(obj)
 {
@@ -99,12 +215,18 @@ function PrepareDig(obj)
 
 }
 
+var DigDoneResult =null;
+
 // 这个是 AjaxRequest 获取返回值之后的结果
 function DoneDig(r){
-    console.log("Done Dig!");
+    console.log("Done Dig!Get the request url");
     // 首先需要为获取金币的按钮添加一个自定义的请求反馈值
+    console.log(JSON.stringify(r.data.dig_url));
 
 
+    // 需要把数据保存到变量
+    DigDoneResult = r.data;
+    
     // 下面需要显示矿工
 
     asyncShowDigAnimation();

@@ -21,6 +21,7 @@ class Dig extends Common
         // 分页
         $number = 10;
 
+        
 
 
         // 参数
@@ -28,6 +29,16 @@ class Dig extends Common
         return $this->fetch('../../../plugins/view/gold_coin/index/dig/index');
     }
 
+    public function DoDig($params = [])
+    {
+        // 参数
+        $params['user'] = $this->user;
+
+
+        $this->assign('params', $params);
+        return $this->fetch('../../../plugins/view/gold_coin/index/dig/DoDig');
+
+    }
 
 }
 

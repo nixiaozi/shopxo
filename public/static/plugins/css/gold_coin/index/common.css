@@ -4,6 +4,14 @@
   --dig_opacity:0;
   --progress-percent:0%;
   --digbtn-opactity:0;
+
+  /* 以下是挖矿结果显示的全局配置 */
+  --result_display:none;
+  --result_opacity:1;
+  --success_display:none;
+  --success_opactity:1;
+  --failure_display:none;
+  --failure_opactity:1;
 }
 
 /*  这个是矿工图片的显示优化 */
@@ -180,3 +188,145 @@
 
 
 
+
+
+/*  以下是挖矿成功或失败的提示信息  */
+
+@media only screen and (max-width:1150px){
+  .dig-result-container{
+    top:0px;
+    font-size: 35px !important;
+  }
+  /* .sunlit-font{
+    
+  } */
+}
+
+@media only screen and (min-width:1151px){
+  .dig-result-container{
+    top:-130px;
+    font-size: 45px !important;
+  }
+  /* .sunlit-font{
+    font-size: 400%;
+  } */
+}
+
+
+.dig-result-container{
+  position:fixed;
+  z-index: 1002;
+  display: var(--result_display);
+  opacity: var(--result_opacity);
+  /* top:-130px; */
+  width: 80%;
+}
+
+
+.dig-img-success{
+  display: var(--success_display);
+  opacity: var(--success_opacity);
+  width: 100%;
+  min-width: 300px;
+  font-size: inherit;
+}
+
+.dig-img-failure{
+  display: var(--failure_display);
+  opacity: var(--failure_opacity);
+  width: 100%;
+  min-width: 300px;
+}
+
+
+/*  下面是文本文字的内容 */
+
+:root {
+  --shadow-color: #e0c9a8;;
+  --shadow-color-light: #eab243;
+  /*  failure -text */
+  --failure-shadow-color-light:#9b9b9b;
+  --failure-shadow-color:#989898;
+}
+
+.sunlit-font {
+  position: fixed;
+  left: 40%;
+  /* top:100px; */
+  margin: calc(50vh - 40px) auto 0 auto;
+  /* font-size: 65px; */
+  text-transform: uppercase;
+  font-family: "Archivo Black", "Archivo", sans-serif;
+  font-weight: normal;
+  display: block;
+  height: auto;
+  text-align: center;
+}
+
+.success-text {
+  color: #fae672;
+  animation: neon-success 1s infinite,upper-show 1.8s ease-out;
+  padding-top: 20px;
+  font-size: inherit;
+}
+
+.failure-text{
+  color: #707070;
+  animation: neon-failure 1s infinite,upper-show 1.8s ease-out;
+  padding-top: 20px;
+  font-size: inherit;
+}
+
+@keyframes upper-show{
+  0%{
+    opacity: 0;
+    padding-top: 280px;
+    font-size: 50%;
+  }
+  80%{
+    opacity: 0.8;
+    padding-top: 0px;
+    font-size: 120%;
+  }
+  100%{
+    opacity: 1;
+    padding-top: 20px;
+    font-size: 100%;
+  }
+}
+
+@keyframes neon-success {
+  0% {
+    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
+    0 0 3px var(--shadow-color-light), 0 0 10px var(--shadow-color-light), 0 0 20px var(--shadow-color-light),
+    0 0 30px var(--shadow-color), 0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 70px var(--shadow-color), 0 0 100px var(--shadow-color), 0 0 200px var(--shadow-color);
+  }
+  50% {
+    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
+    0 0 5px var(--shadow-color-light), 0 0 15px var(--shadow-color-light), 0 0 25px var(--shadow-color-light),
+    0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 60px var(--shadow-color), 0 0 80px var(--shadow-color), 0 0 110px var(--shadow-color), 0 0 210px var(--shadow-color);
+  }
+  100% {
+    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
+    0 0 3px var(--shadow-color-light), 0 0 10px var(--shadow-color-light), 0 0 20px var(--shadow-color-light),
+    0 0 30px var(--shadow-color), 0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 70px var(--shadow-color), 0 0 100px var(--shadow-color), 0 0 200px var(--shadow-color);
+  }
+}
+
+@keyframes neon-failure {
+  0% {
+    text-shadow: -1px -1px 1px var(--failure-shadow-color-light), -1px 1px 1px var(--failure-shadow-color-light), 1px -1px 1px var(--failure-shadow-color-light), 1px 1px 1px var(--failure-shadow-color-light),
+    0 0 3px var(--failure-shadow-color-light), 0 0 10px var(--failure-shadow-color-light), 0 0 20px var(--failure-shadow-color-light),
+    0 0 30px var(--failure-shadow-color), 0 0 40px var(--failure-shadow-color), 0 0 50px var(--failure-shadow-color), 0 0 70px var(--failure-shadow-color), 0 0 100px var(--failure-shadow-color), 0 0 200px var(--failure-shadow-color);
+  }
+  50% {
+    text-shadow: -1px -1px 1px var(o), -1px 1px 1px var(--failure-shadow-color-light), 1px -1px 1px var(--failure-shadow-color-light), 1px 1px 1px var(--failure-shadow-color-light),
+    0 0 5px var(--failure-shadow-color-light), 0 0 15px var(--failure-shadow-color-light), 0 0 25px var(--failure-shadow-color-light),
+    0 0 40px var(--failure-shadow-color), 0 0 50px var(--failure-shadow-color), 0 0 60px var(--failure-shadow-color), 0 0 80px var(--failure-shadow-color), 0 0 110px var(--failure-shadow-color), 0 0 210px var(--failure-shadow-color);
+  }
+  100% {
+    text-shadow: -1px -1px 1px var(--failure-shadow-color-light), -1px 1px 1px var(--failure-shadow-color-light), 1px -1px 1px var(--failure-shadow-color-light), 1px 1px 1px var(--failure-shadow-color-light),
+    0 0 3px var(--failure-shadow-color-light), 0 0 10px var(--failure-shadow-color-light), 0 0 20px var(--failure-shadow-color-light),
+    0 0 30px var(--failure-shadow-color), 0 0 40px var(--failure-shadow-color), 0 0 50px var(--failure-shadow-color), 0 0 70px var(--failure-shadow-color), 0 0 100px var(--failure-shadow-color), 0 0 200px var(--failure-shadow-color);
+  }
+}
