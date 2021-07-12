@@ -23,7 +23,7 @@
             <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-icon-shield" data-view="fun"
                 {{// 下面的url就是如何调用插件中的api模块定义的方法}} type="button"
                 data-url="{{:MyUrl('api/plugins/index',['pluginsname'=>'gold_coin','pluginscontrol'=>'Dig','pluginsaction'=>'Todig'])}}"
-                onclick="PrepareDig($(this))" data-value="DoneDig" data-am-loading="{loadingText:'请求中...'}"> 挖矿</button>
+                onclick="PrepareDig($(this))" data-value="DoneDig" data-am-loading="{loadingText:'准备中...'}"> 挖矿</button>
         {{/if}}
         {{if in_array($plugins_control, ['goldcoin', 'exchange']) and (!isset($plugins_base['is_enable_exchange']) or $plugins_base['is_enable_exchange'] eq 1)}}
             <button href="{{:PluginsHomeUrl('gold_coin', 'exchange', 'authinfo')}}" class="am-btn am-btn-success am-topbar-btn am-btn-sm am-icon-money">兑换</button>
@@ -68,7 +68,7 @@
 {{/if}}
 
 <div class="transform dig-img-container" >
-    <button id="DigCoinBtn" class="dig-button" onclick="ToDigCoin($(this))" data-am-loading="{spinner:'circle-o-notch',loadingText:'请求中...'}">金币获取</button>
+    <button id="DigCoinBtn" class="dig-button" onclick="ToDigCoin($(this))" data-am-loading="{spinner:'circle-o-notch',loadingText:'挖矿中...'}">金币获取</button>
     <div class="meter">
         <span class="progress-transform"></span>
     </div>
@@ -95,7 +95,8 @@ function ToDigCoin(obj)
     $('#DigCoinBtn').button("loading"); // 开始 loading 方法
     // SunlitAjax($target);
     // 需要打开一个页面
-    window.open(DigDoneResult.dig_url, '_blank', 'toolbar=0,location=0,menubar=0');
+    if(DigDoneResult.dig_url!="")
+        window.open(DigDoneResult.dig_url, '_blank', 'toolbar=0,location=0,menubar=0');
     console.log("DigDoneResult.dig_url is==>"+DigDoneResult.dig_url);
     console.log("DigDoneResult.dig_id is ==>"+DigDoneResult.dig_id);
 
@@ -137,8 +138,8 @@ function DigCoinCallBackSuccess(res)
         $('#DigCoinBtn').button("reset"); // 完成 loading 方法
         digCheck = true;
         // 需要根据状态进行顺序的异步操作
-        // DigCoinCallBackSuccessAsync(res.data.status);
-        DigCoinCallBackSuccessAsync(-1);
+        DigCoinCallBackSuccessAsync(res.data.status);
+        // DigCoinCallBackSuccessAsync(-1);
     }
 
    
@@ -157,7 +158,7 @@ async  function DigCoinCallBackSuccessAsync(checkstatus)
     // checkstatus 为 1 表示完成成功
     if(checkstatus == 1)
     {
-        $("#DigMsg").text("金币+"+8);
+        $("#DigMsg").text("金币+"+DigDoneResult.get_coin);
 
         await TimeoutPromise(function(){
             documentStyles.setProperty('--result_display', `block`); // 显示成功以及提示

@@ -42,13 +42,13 @@ class  GoldDigService
     // 获取所有的挖矿方法
     public static function  GetAllDigMethod()
     {
-
+        
     }
 
     // 获取可用的挖矿方法
     public static function  GetCurrentDigMethod()
     {
-
+        
     }
 
 
@@ -88,11 +88,11 @@ class  GoldDigService
                     'check_code' => $check_code,
                     'dig_id' => $id,
                 ];
-                $dig_url = PluginsService::PluginsControlCall($selected_dig_method['pluginsName'],$selected_dig_method['controllerName'],
+                $dig_result = PluginsService::PluginsControlCall($selected_dig_method['pluginsName'],$selected_dig_method['controllerName'],
                             $selected_dig_method['actionName'],'api',$params);
 
                 $updateData=[
-                    'dig_url' =>$dig_url['data'],
+                    'dig_url' =>$dig_result['data']['url'],
                 ];
 
                 Db::name('PluginsGoldCoinDig')->where(['id'=>$id])->update($updateData);
@@ -101,8 +101,9 @@ class  GoldDigService
                 // $test = Db::getLastSql();
 
                 $result=[
-                    'dig_url'   => $dig_url['data'],
+                    'dig_url'   => $dig_result['data']['url'],
                     'dig_id'    => $id,
+                    'get_coin'  => $dig_result['data']['coin_number']
                 ];
 
                 return $result;

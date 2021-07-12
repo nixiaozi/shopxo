@@ -194,7 +194,6 @@ class GoldCoinService
                 Db::rollback();
                 return DataReturn('金币账户操作失败', -100);
             }
-
             // 日志
             $log_data = [
                 'user_id'           => $goldcoin['data']['user_id'],

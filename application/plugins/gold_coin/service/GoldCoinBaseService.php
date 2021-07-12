@@ -316,7 +316,7 @@ class GoldCoinBaseService
 
                 // 时间
                 $v['add_time_time'] = empty($v['add_time']) ? '' : date('Y-m-d H:i:s', $v['add_time']);
-                $v['dig_time_time'] = empty($v['dig_time_time']) ? '' : date('Y-m-d H:i:s', $v['dig_time_time']);
+                $v['dig_time_time'] = empty($v['dig_time']) ? '无' : date('Y-m-d H:i:s', $v['dig_time']);
             }
         }
         return DataReturn('处理成功', 0, $data);
@@ -333,6 +333,19 @@ class GoldCoinBaseService
     {
         $where = [];
 
+        // 用户id
+        if(!empty($params['user']))
+        {
+            $where[] = ['user_id', '=', $params['user']['id']];
+        }
+
+        // id 挖矿编号
+        if(!empty($params['id']))
+        {
+            $where[] = ['id', '=', intval($params['id'])];
+        }
+        
+
         // 用户
         if(!empty($params['keywords']))
         {
@@ -342,7 +355,7 @@ class GoldCoinBaseService
                 $where[] = ['user_id', 'in', $user_ids];
             } else {
                 // 无数据条件，避免用户搜索条件没有数据造成的错觉
-                $where[] = ['id', '=', 0];
+                $where[] = ['id', '=', $params['keywords']];
             }
         }
 
