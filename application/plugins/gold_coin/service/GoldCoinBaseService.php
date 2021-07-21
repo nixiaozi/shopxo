@@ -132,7 +132,8 @@ class GoldCoinBaseService
                 // 创建时间
                 $v['add_time_time'] = empty($v['add_time']) ? '' : date('Y-m-d H:i:s', $v['add_time']);
             
-            
+                // 更新时间
+                $v['upd_time_time'] = empty($v['upd_time']) ? '' : date('Y-m-d H:i:s', $v['upd_time']);
             }
         }
         return DataReturn('处理成功', 0, $data);
@@ -170,7 +171,7 @@ class GoldCoinBaseService
                     $where[] = ['user_id', 'in', $user_ids];
                 } else {
                     // 无数据条件，走单号条件
-                    $where[] = ['recharge_no', '=', $params['keywords']];
+                    $where[] = ['cash_no', 'like', '%'.$params['keywords'].'%'];
                 }
             }
         }
@@ -181,7 +182,7 @@ class GoldCoinBaseService
             $where[] = ['id', '=', intval($params['id'])];
         }
         // 订单号
-        if(!empty($params['orderno']))
+        if(!empty($params[' ']))
         {
             $where[] = ['cash_no', '=', trim($params['orderno'])];
         }

@@ -4,10 +4,10 @@
         class="am-active"{{/if}}>
         <a href="{{:PluginsHomeUrl('gold_coin', 'Goldcoin', 'index')}}">金币余额</a>
     </li>
-    <li {{if isset($plugins_control) and $plugins_control eq 'recharge'}}class="am-active"{{/if}}>
+    <li {{if isset($plugins_control) and $plugins_control eq 'dig'}}class="am-active"{{/if}}>
         <a href="{{:PluginsHomeUrl('gold_coin', 'Dig', 'index')}}">金币获取</a>
     </li>
-    <li {{if isset($plugins_control) and $plugins_control eq 'cash'}}class="am-active"{{/if}}>
+    <li {{if isset($plugins_control) and $plugins_control eq 'exchange'}}class="am-active"{{/if}}>
         <a href="{{:PluginsHomeUrl('gold_coin', 'Exchange', 'index')}}">金币兑换</a>
     </li>
 
@@ -26,7 +26,7 @@
                 onclick="PrepareDig($(this))" data-value="DoneDig" data-am-loading="{loadingText:'准备中...'}"> 挖矿</button>
         {{/if}}
         {{if in_array($plugins_control, ['goldcoin', 'exchange']) and (!isset($plugins_base['is_enable_exchange']) or $plugins_base['is_enable_exchange'] eq 1)}}
-            <button href="{{:PluginsHomeUrl('gold_coin', 'exchange', 'authinfo')}}" class="am-btn am-btn-success am-topbar-btn am-btn-sm am-icon-money">兑换</button>
+            <a href="{{:PluginsHomeUrl('gold_coin', 'exchange', 'authinfo')}}" class="am-btn am-btn-success am-topbar-btn am-btn-sm am-icon-money">兑换</a>
         {{/if}}
     </div>
 </ul>
@@ -124,7 +124,7 @@ function ToDigCoin(obj)
     };
 
     setTimeout(callback, 2000);
-
+    
 }
 
 function DigCoinCallBackSuccess(res)

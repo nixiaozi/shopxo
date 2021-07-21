@@ -148,7 +148,7 @@ class CashService
             {
                 return DataReturn('验证码已过期', -11);
             }
-            if(!$verify->CheckCorrect($params['verify']))
+            if(!$verify->CheckCorrect($params['verify'])) // CheckCorrect 用来进行验证码验证
             {
                 return DataReturn('验证码错误', -12);
             }

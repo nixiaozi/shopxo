@@ -1,0 +1,139 @@
+{{include file="public/header" /}}
+
+<!-- header top nav -->
+{{include file="public/header_top_nav" /}}
+
+<!-- search -->
+{{include file="public/nav_search" /}}
+
+<!-- header nav -->
+{{include file="public/header_nav" /}}
+
+<!-- goods category -->
+{{include file="public/goods_category" /}}
+
+<div class="am-container user-main">
+
+    <!-- user menu start -->
+    {{include file="public/user_menu" /}}
+    <!-- user menu end -->
+
+    <!-- content start -->
+    <div class="user-content">
+        <div class="user-content-body">
+            <!-- user menu start -->
+            {{include file="../../../plugins/view/gold_coin/index/public/nav" /}}
+            <!-- user menu end -->
+
+            
+            <!-- tips start -->
+            <div class="am-alert am-alert-success wallet-cash-auth-tips">
+                <p class="title">操作提示</p>
+                <ul>
+                    <li>1. 请选择 "绑定邮箱" 或 "绑定手机" 方式其一作为安全校验码的获取方式并正确输入。</li>
+                    
+                </ul>
+            </div>
+            <!-- tips end -->
+
+
+            <!-- form start -->
+            <form class="am-form form-validation" method="post" action="{{:PluginsHomeUrl('gold_coin', 'exchange', 'create')}}" 
+                request-type="ajax-url" request-value="{{:PluginsHomeUrl('gold_coin', 'exchange', 'index')}}">
+                <div class="am-form-group">
+                        <label>兑现金额<span class="am-form-group-label-tips-must">必填</span></label>
+                        <div class="am-input-group am-input-group-sm">
+                            <input type="number" autocomplete="off" name="money" step="1"  min="1" max="{{$can_give_money}}"  id="tExchangeMoney"
+                                class="am-radius" placeholder="兑现金额" onkeyup="WantExchangeMoney($(this))" data-view="fun" data-value="SuccessShowRealMoney"
+                                data-url="{{:MyUrl('api/plugins/index',['pluginsname'=>'gold_coin','pluginscontrol'=>'Exchange','pluginsaction'=>'TheRealGetMoney'])}}"
+                                data-validation-message="兑现金额，最低1元，最高{{$can_give_money}}元" required />
+                            <span class="am-input-group-btn">
+                                <button type="button" class="am-btn am-btn-default am-radius">元</button>
+                            </span>
+                        </div>
+
+                        <div class="am-alert" data-am-alert>
+                            <p id="show-real-money" style="display: none;">实际到账金额<span class="cash-real-mony"></span> 元</p>
+                            <p>当前金币数 <span class="cash-vaild-mony">{{$user_current_coin}}</span> 元</p>
+                            <p>当前用户积分 <span class="cash-normal-mony">{{$user_current_Integral}}</span> 元</p>
+                            <p>当前可兑现金额 <span class="cash-give-mony" data-user-money="{{$can_give_money}}">{{$can_give_money}}</span> 元 <a href="javascript:;" onClick="InputMax()" >填入</a></p>
+                        </div>
+                    </div>
+
+                <div class="am-form-group">
+                    <label>验证码</label>
+                    <div class="am-input-group am-input-group-sm">
+                        <input type="text" name="verify" class="am-radius" placeholder="请输入验证码" minlength="4" maxlength="4" data-validation-message="请输入图片验证码" required />
+                        <span class="am-input-group-btn">
+                            <span class="am-btn am-btn-default am-radius am-padding-0 form-verify">
+                                <img src="{{:MyUrl('index/user/userverifyentry', ['type'=>'user_login'])}}" class="am-radius c-p" id="form-verify-img" onClick="this.src=this.src+'#'+Math.random();" />
+                                <a href="javascript:;" class="form-verify-tips" onClick="document.getElementById('form-verify-img').src='{{:MyUrl('index/user/userverifyentry', ['type'=>'user_login'])}}#'+Math.random();">更换一张</a>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="am-form-group am-form-group-refreshing">
+                    <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm btn-loading-example" data-am-loading="{loadingText: '处理中...'}">确认</button>
+                </div>
+            </form>
+            <!-- form end -->
+
+
+
+
+        </div>
+    </div>
+    <!-- content end -->
+</div>
+
+
+
+
+
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->
+
+<script>
+    var timer =null;
+
+    function WantExchangeMoney(obj){
+        $("#show-real-money .cash-real-mony").text(" -- ");
+        $('#show-real-money').show();
+        var maxmoney = parseInt($(".cash-give-mony").attr('data-user-money'));
+        var themoney = parseInt(obj.val());
+        if(maxmoney<themoney){
+            return;
+        }
+        clearTimeout(timer);
+
+        timer = setTimeout(function(){ 
+            console.log("WantExchangeMoney!"); 
+            obj[0].setAttribute('data-id',obj.val());
+            SunlitAjax($(obj[0]),null,null);
+        }, 500);
+
+        
+    }
+
+    var hideTimer = null;
+
+    function SuccessShowRealMoney(r){
+        console.log(JSON.stringify(r));
+        $("#show-real-money .cash-real-mony").text(" "+r['data']);
+
+        // clearTimeout(hideTimer);
+        // hideTimer = setTimeout(function(){
+        //     $('#show-real-money').hide();
+        // },3000)
+    }
+
+
+    function InputMax(){
+        var maxmoney = parseInt($(".cash-give-mony").attr('data-user-money'));
+        $("#tExchangeMoney").val(maxmoney);
+        $("#tExchangeMoney").trigger("keyup");
+    }
+
+</script>

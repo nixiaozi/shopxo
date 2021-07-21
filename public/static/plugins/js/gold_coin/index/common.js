@@ -5,7 +5,7 @@ $(function(){
 
 });
 
-function SunlitAjax(element,beforeAction=null,completeAction=null)
+function SunlitAjax(element,beforeAction,completeAction)
 {
     // 参数
 	var id = element.attr('data-id');
@@ -28,10 +28,12 @@ function SunlitAjax(element,beforeAction=null,completeAction=null)
 		timeout:element.attr('data-timeout') || 60000,
 		data:data,
         beforeSend:function(){
-			if(beforeAction==null){
+			if(beforeAction===undefined){ // 这里必须绝对等于 因为  null == undefined 为 true
 				$button.button("loading");
 			}else{
-				beforeAction();
+				if(beforeAction!=null){
+					beforeAction();
+				}
 			}
         },
 		success:function(result)
@@ -79,10 +81,12 @@ function SunlitAjax(element,beforeAction=null,completeAction=null)
 		},
         complete:function()
         {
-			if(completeAction==null){
+			if(completeAction===undefined){
 				$button.button("reset");
 			}else{
-				completeAction();
+				if(completeAction!=null){
+					completeAction();
+				}
 			}
         }
 	});
