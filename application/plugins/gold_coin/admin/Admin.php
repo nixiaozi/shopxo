@@ -5,7 +5,7 @@ use app\plugins\gold_coin\service\GoldCoinBaseService;
 use app\plugins\gold_coin\service\GoldDigService;
 use think\Controller;
 use app\service\PluginsService;
-use think\Db;
+use app\plugins\gold_coin\service\StatisticalService;
 
 /**
  * 金币 - 后台管理
@@ -36,7 +36,7 @@ class Admin extends Controller
             $this->assign("data",$ret["data"]);
 
             // 统计数据 —— 可以使用一个服务添加
-            
+            $this->assign('statistical', StatisticalService::StatisticalData());
 
             // 输出管理页面
             return $this->fetch('../../../plugins/view/gold_coin/admin/admin/index');
