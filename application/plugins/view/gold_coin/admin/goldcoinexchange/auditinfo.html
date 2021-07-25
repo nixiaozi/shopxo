@@ -1,0 +1,71 @@
+{{include file="public/header" /}}
+
+<!-- right content start  -->
+<div class="content-right">
+    <div class="content">
+        <legend>
+            <span class="fs-16">兑现审核</span>
+            <a href="{{:PluginsAdminUrl('gold_coin', 'goldcoinexchange', 'index')}}" class="fr fs-14 m-t-5 am-icon-mail-reply"> 返回</a>
+        </legend>
+
+        <div class="cash-content">
+            {{if !empty($data)}}
+                <!-- form start -->
+                <form class="am-form form-validation view-save" action="{{:PluginsAdminUrl('gold_coin', 'goldcoinexchange', 'audit')}}" method="POST" request-type="ajax-url" request-value="{{:PluginsAdminUrl('gold_coin', 'goldcoinexchange', 'index')}}">
+                    {{if !empty($data['user'])}}
+                        <div class="am-alert am-alert-secondary user-info" data-am-alert>
+                            <p class="am-alert-title">用户信息</p>
+                            <img src="{{$data.user.avatar}}" alt="{{$data.user.user_name_view}}" class="am-img-thumbnail am-radius am-align-left" />
+                            <ul class="user-base">
+                                <li>名称：{{if empty($data['user']['username'])}}<span class="cr-ccc">未填写</span>{{else /}}{{$data.user.username}}{{/if}}</li>
+                                <li>昵称：{{if empty($data['user']['nickname'])}}<span class="cr-ccc">未填写</span>{{else /}}{{$data.user.nickname}}{{/if}}</li>
+                                <li>手机：{{if empty($data['user']['mobile'])}}<span class="cr-ccc">未填写</span>{{else /}}{{$data.user.mobile}}{{/if}}</li>
+                                <li>邮箱：{{if empty($data['user']['email'])}}<span class="cr-ccc">未填写</span>{{else /}}{{$data.user.email}}{{/if}}</li>
+                            </ul>
+                        </div>
+                    {{/if}}
+
+
+                    <div class="am-alert" data-am-alert>
+                        <p class="am-alert-title">兑换信息</p>
+                        用户金币：共 {{$user_goldcoin.current_coin}} 需消耗 {{$data.gold_out}}<br />
+                        用户积分：共 {{$user_integral}} 需消耗 {{$data.integral_out}}<br />
+                    </div>
+
+                    <div class="am-alert" data-am-alert>
+                        <p class="am-alert-title">申请信息</p>
+                        单号：{{$data.cash_no}}<br />
+                        申请金额：<span class="money-bold cash-money">{{$data.money_in}}</span> 元
+                        到账金额：<span class="money-bold cash-money">{{$data.money_real}}</span> 元
+                    </div>
+
+
+                    <div class="am-form-group">
+                      <label>备注<span class="am-form-group-label-tips">用户可见</span></label>
+                      <textarea class="am-radius" name="msg" rows="3" maxlength="180" placeholder="备注最多 180 个字符" data-validation-message="备注格式最多 80 个字符"></textarea>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label class="block">发送站内信</label>
+                        <input name="is_send_message" value="1" type="checkbox" data-off-text="否" data-on-text="是" data-size="xs" data-on-color="success" data-off-color="default" data-handle-width="50" data-am-switch checked="true" />
+                    </div>
+
+                    <div class="am-form-group am-form-group-refreshing am-cf form-submit-list">
+                        <input type="hidden" name="id" {{if !empty($data['id'])}} value="{{$data.id}}"{{/if}} />
+                        <input type="text" name="type" data-validation-message="操作类型有误，同意或拒绝操作出错" required/>
+                        <button type="submit" class="am-btn am-btn-primary am-radius btn-loading-example am-btn-sm am-fl" data-am-loading="{loadingText:'处理中...'}" data-type="agree">提交</button>
+                        <button type="submit" class="am-btn am-btn-danger am-radius btn-loading-example am-btn-sm am-fr" data-am-loading="{loadingText:'处理中...'}" data-type="refuse">拒绝</button>
+                    </div>
+                </form>
+                <!-- form end -->
+            {{else /}}
+                <div class="table-no"><i class="am-icon-warning"></i> {{$msg}}</div>
+            {{/if}}
+        </div>
+    </div>
+</div>
+<!-- right content end  -->
+        
+<!-- footer start -->
+{{include file="public/footer" /}}
+<!-- footer end -->
