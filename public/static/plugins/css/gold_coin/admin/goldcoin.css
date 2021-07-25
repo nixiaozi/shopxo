@@ -1,0 +1,28 @@
+/**
+ * 列表
+ */
+ .wallet-content .view-operation {
+    width: 160px;
+}
+.wallet-content .view-operation button {
+    width: calc(50% - 5px);
+}
+
+
+/**
+ * 金额
+ */
+.wallet-content .normal-money,
+.wallet-content .frozen-money,
+.wallet-content .give-money {
+    font-weight: 700;
+}
+.wallet-content .normal-money {
+    color: #4CAF50;
+}
+.wallet-content .frozen-money {
+    color: #FF9800;
+}
+.wallet-content .give-money {
+    color: #666;
+}
