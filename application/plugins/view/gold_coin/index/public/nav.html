@@ -101,6 +101,7 @@ function ToDigCoin(obj)
     console.log("DigDoneResult.dig_id is ==>"+DigDoneResult.dig_id);
 
 
+    // 回调函数用来查询挖矿状态的信息更新
     digCheckElement=document.createElement("div");
     digCheckElement.setAttribute('data-url',"{{:MyUrl('api/plugins/index',['pluginsname'=>'gold_coin','pluginscontrol'=>'Dig','pluginsaction'=>'DigStatu'])}}");
     digCheckElement.setAttribute('data-id',DigDoneResult.dig_id);     // 定义一定要有的id
@@ -138,6 +139,7 @@ function DigCoinCallBackSuccess(res)
         $('#DigCoinBtn').button("reset"); // 完成 loading 方法
         digCheck = true;
         // 需要根据状态进行顺序的异步操作
+        DigDoneResult.get_coin = res.data.dig_gold;
         DigCoinCallBackSuccessAsync(res.data.status);
         // DigCoinCallBackSuccessAsync(-1);
     }
