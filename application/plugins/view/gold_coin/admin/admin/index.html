@@ -44,27 +44,40 @@
                         </li>
                         <li>
                             <div class="items">
-                                <label>金币兑换比率</label>
+                                <label>单次最低兑换金额</label>
                                 <div>
-                                    {{if empty($data['gold_exchange_rate'])}}
-                                        100
+                                    {{if empty($data['gold_exchange_min'])}}
+                                        1
                                     {{else /}}
-                                        {{$data.gold_exchange_rate}}
+                                        {{$data.gold_exchange_min}}
                                     {{/if}}
-                                    %
+                                    元
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="items">
-                                <label>积分消耗比率</label>
+                                <label>单次最高兑换金额</label>
                                 <div>
-                                    {{if empty($data['integral_consume_rate'])}}
-                                        100
+                                    {{if empty($data['gold_exchange_max'])}}
+                                        0
                                     {{else /}}
-                                        {{$data.integral_consume_rate}}
+                                        {{$data.gold_exchange_max}}
                                     {{/if}}
-                                    %
+                                    元【为 0 代表不限制】
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="items">
+                                <label>每天可挖矿次数</label>
+                                <div>
+                                    {{if empty($data['gold_digtime_perday'])}}
+                                        3
+                                    {{else /}}
+                                        {{$data.gold_digtime_perday}}
+                                    {{/if}}
+                                    次
                                 </div>
                             </div>
                         </li>

@@ -74,6 +74,12 @@ class Exchange extends Common
 
         $params['user'] = $this->user;
 
+        if(GoldExchangeService::UserCheckExchangeNum($params['user']['id'])>0)
+        {
+            $this->assign('msg', '你有在审核中的兑现申请');
+            return $this->fetch('public/tips_error');
+        }
+
         // 认证方式
         // $this->assign('check_account_list', CashService::UserCheckAccountList($this->user));
 
@@ -84,9 +90,15 @@ class Exchange extends Common
 
         $this->assign('user_current_coin',$userGoldCoin['data']['current_coin']);
         $this->assign('user_current_Integral',$userIntegral['integral']);
-        $this->assign('can_give_money',$userGoldCoin['data']['current_coin']<$userIntegral['integral']?$userGoldCoin['data']['current_coin']:$userIntegral['integral']);
 
+        $minGoldIntegral = $userGoldCoin['data']['current_coin']<$userIntegral['integral']?$userGoldCoin['data']['current_coin']:$userIntegral['integral'];
+        $config = GoldCoinBaseService::BaseConfig();
+        $gold_exchange_max =isset($config['data']['gold_exchange_max'])?$config['data']['gold_exchange_max']:$minGoldIntegral;
+        $can_give_money = $gold_exchange_max==0?$minGoldIntegral:min($gold_exchange_max,$minGoldIntegral);
+        $this->assign('can_give_money',$can_give_money);
 
+        $gold_exchange_min = isset($config['data']['gold_exchange_min'])?$config['data']['gold_exchange_min']:1;
+        $this->assign('gold_exchange_min',$gold_exchange_min);
         // 浏览器名称
         $this->assign('home_seo_site_title', SeoService::BrowserSeoTitle('金币兑现申请 - 我的金币', 1));
 
@@ -103,6 +115,8 @@ class Exchange extends Common
     {
         // 获取当前用户并进行添加处理
         $params['user'] = $this->user;
+       
+
         return GoldExchangeService::ExchangeCreate($params);
     }
 

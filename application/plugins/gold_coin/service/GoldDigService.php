@@ -1,10 +1,9 @@
 <?php
 namespace  app\plugins\gold_coin\service;
 
-use app\admin\controller\Plugins;
+
 use app\service\PluginsService;
 use think\Db;
-use think\db\Where;
 
 class  GoldDigService
 {
@@ -140,6 +139,20 @@ class  GoldDigService
             return DataReturn("找不到数据",0,null);
         }
 
+    }
+
+    public static function UserCurrentDayDigNumber($user_id)
+    {
+        $today_time_start = strtotime(date('Y-m-d 00:00:00'));
+        $today_time_end = time();
+
+        $where[] =[
+            ['user_id','=', $user_id],
+            ['add_time', '>=', $today_time_start],
+            ['add_time', '<=', $today_time_end],
+        ];
+
+        return Db::name('PluginsGoldCoinDig')->where($where)->count();
     }
 
 

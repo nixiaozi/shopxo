@@ -259,6 +259,16 @@ class GoldExchangeService
 
     }
 
+    public static function UserCheckExchangeNum($user_id)
+    {
+        $where[] =[
+            ['user_id','=', $user_id],
+            ['status', '>=', 0],
+        ];
+
+        return Db::name('PluginsGoldCoinMoney')->where($where)->count();
+    }
+
 }
 
 

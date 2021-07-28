@@ -26,7 +26,7 @@
                 onclick="PrepareDig($(this))" data-value="DoneDig" data-am-loading="{loadingText:'准备中...'}"> 挖矿</button>
         {{/if}}
         {{if in_array($plugins_control, ['goldcoin', 'exchange']) and (!isset($plugins_base['is_enable_exchange']) or $plugins_base['is_enable_exchange'] eq 1)}}
-            <a href="{{:PluginsHomeUrl('gold_coin', 'exchange', 'authinfo')}}" class="am-btn am-btn-success am-topbar-btn am-btn-sm am-icon-money">兑换</a>
+            <a href="{{:PluginsHomeUrl('gold_coin', 'exchange', 'authinfo')}}" class="am-btn am-btn-success am-topbar-btn am-btn-sm am-icon-money">兑现</a>
         {{/if}}
     </div>
 </ul>

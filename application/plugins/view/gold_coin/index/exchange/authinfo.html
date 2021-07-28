@@ -30,8 +30,8 @@
             <div class="am-alert am-alert-success wallet-cash-auth-tips">
                 <p class="title">操作提示</p>
                 <ul>
-                    <li>1. 请选择 "绑定邮箱" 或 "绑定手机" 方式其一作为安全校验码的获取方式并正确输入。</li>
-                    
+                    <li>1. 金币兑现需要消耗等量的用户积分和金币。</li>
+                    <li>2. 兑现时根据兑现金额需扣除一定金额的手续费。</li>
                 </ul>
             </div>
             <!-- tips end -->
@@ -43,17 +43,17 @@
                 <div class="am-form-group">
                         <label>兑现金额<span class="am-form-group-label-tips-must">必填</span></label>
                         <div class="am-input-group am-input-group-sm">
-                            <input type="number" autocomplete="off" name="money" step="1"  min="1" max="{{$can_give_money}}"  id="tExchangeMoney"
+                            <input type="number" autocomplete="off" name="money" step="1"  min="{{$gold_exchange_min}}" max="{{$can_give_money}}"  id="tExchangeMoney"
                                 class="am-radius" placeholder="兑现金额" onkeyup="WantExchangeMoney($(this))" data-view="fun" data-value="SuccessShowRealMoney"
                                 data-url="{{:MyUrl('api/plugins/index',['pluginsname'=>'gold_coin','pluginscontrol'=>'Exchange','pluginsaction'=>'TheRealGetMoney'])}}"
-                                data-validation-message="兑现金额，最低1元，最高{{$can_give_money}}元" required />
+                                data-validation-message="兑现金额，最低{{$gold_exchange_min}}元，最高{{$can_give_money}}元" required />
                             <span class="am-input-group-btn">
                                 <button type="button" class="am-btn am-btn-default am-radius">元</button>
                             </span>
                         </div>
 
                         <div class="am-alert" data-am-alert>
-                            <p id="show-real-money" style="display: none;">实际到账金额<span class="cash-real-mony"></span> 元</p>
+                            <p id="show-real-money" style="display: none;">估算实际到账金额<span class="cash-real-mony"></span> 元</p>
                             <p>当前金币数 <span class="cash-vaild-mony">{{$user_current_coin}}</span> 元</p>
                             <p>当前用户积分 <span class="cash-normal-mony">{{$user_current_Integral}}</span> 元</p>
                             <p>当前可兑现金额 <span class="cash-give-mony" data-user-money="{{$can_give_money}}">{{$can_give_money}}</span> 元 <a href="javascript:;" onClick="InputMax()" >填入</a></p>
