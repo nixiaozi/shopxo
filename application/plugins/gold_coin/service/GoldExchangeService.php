@@ -16,8 +16,8 @@ class GoldExchangeService
     public static $Excharge_status_list = [
         0 => ['value' => 0, 'name' => '审核中', 'checked' => true],
         2 => ['value' => 2, 'name' => '审核通过'],
-        -1 => ['value' => -1, 'name' => '已取消'],
-        -2 => ['value' => -2, 'name' => '审核拒绝'],
+        11 => ['value' => 11, 'name' => '已取消'],
+        12 => ['value' => 12, 'name' => '审核拒绝'],
     ];
 
     // 通过你的对现金额获取你实际得到的金额

@@ -79,6 +79,13 @@ class Dig extends Common
 
     }
 
+
+    public  function delete($params = [])
+    {
+        GoldDigService::DeletedGoldCoin($params['id']);
+        return DataReturn("删除成功",0);
+    }
+
 }
 
 ?>

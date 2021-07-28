@@ -12,7 +12,8 @@ class  GoldDigService
     public static $gold_dig_status_list =[
         0 => ['value' => 0, 'name' => '未挖矿', 'checked' => true],
         1 => ['value' => 1, 'name' => '已挖矿'],
-        -1 =>['value' => -1, 'name' => '已过期'],
+        11 =>['value' => 11, 'name' => '已过期'],
+        12 =>['value' => 12, 'name' => '已取消'],
     ];
 
     
@@ -139,6 +140,18 @@ class  GoldDigService
             return DataReturn("找不到数据",0,null);
         }
 
+    }
+
+    public static function DeletedGoldCoin($dig_id)
+    {
+        // 更新条目信息
+        $digData=[
+            'status' => 12,
+            'msg' => '用户取消了挖矿操作'.'[用户没能获得金币]',
+        ];
+
+        !Db::name('PluginsGoldCoinDig')
+            ->where(['id'=>$dig_id])->update($digData);
     }
 
     public static function UserCurrentDayDigNumber($user_id)
